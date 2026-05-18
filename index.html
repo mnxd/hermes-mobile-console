@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Hermes Mobile Console</title>
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --ink: #17201b;
+      --muted: #6f766f;
+      --card: rgba(255,255,255,.78);
+      --line: rgba(23,32,27,.14);
+      --accent: #0f6b4f;
+      --accent2: #d26b31;
+      --danger: #a83232;
+      --shadow: 0 18px 50px rgba(38, 32, 22, .14);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(210,107,49,.20), transparent 28rem),
+        radial-gradient(circle at 90% 0%, rgba(15,107,79,.22), transparent 26rem),
+        linear-gradient(135deg, #f8f0dd 0%, #eef4ed 55%, #f8efe7 100%);
+      font-family: ui-serif, Georgia, "Noto Serif SC", "Songti SC", serif;
+      min-height: 100svh;
+      padding: 18px;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; }
+    header { padding: 16px 4px 14px; }
+    .eyebrow { font: 700 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+    h1 { margin: 8px 0 6px; font-size: clamp(32px, 9vw, 58px); line-height: .92; letter-spacing: -.05em; }
+    .sub { color: var(--muted); font-size: 15px; line-height: 1.5; }
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin: 14px 0;
+    }
+    label { display: block; font: 700 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); margin: 8px 0 7px; text-transform: uppercase; letter-spacing: .08em; }
+    input, textarea {
+      width: 100%; border: 1px solid var(--line); background: rgba(255,255,255,.72); color: var(--ink);
+      border-radius: 16px; padding: 13px 14px; font: 15px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; outline: none;
+    }
+    textarea { min-height: 90px; resize: vertical; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    button {
+      border: 0; border-radius: 18px; padding: 15px 12px; min-height: 54px;
+      color: white; background: var(--accent); font: 800 16px/1.1 ui-sans-serif, "Noto Sans SC", sans-serif;
+      box-shadow: 0 10px 24px rgba(15,107,79,.2);
+    }
+    button.secondary { background: #25312c; }
+    button.warn { background: var(--accent2); }
+    button.danger { background: var(--danger); }
+    button:active { transform: translateY(1px) scale(.99); }
+    .out {
+      white-space: pre-wrap; word-break: break-word; min-height: 180px; max-height: 52svh; overflow: auto;
+      font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: rgba(23,32,27,.88); color: #f3efe6; border-radius: 20px; padding: 14px;
+    }
+    .fine { color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .pill { display: inline-flex; gap: 6px; align-items: center; padding: 7px 10px; border-radius: 999px; background: rgba(15,107,79,.1); color: var(--accent); font: 700 12px ui-monospace, monospace; }
+    @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } body { padding: 14px; } .card { border-radius: 22px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">Hermes Mobile Console</div>
+      <h1>手机控制台</h1>
+      <div class="sub">静态前端可以部署到 GitHub Pages；真正执行由你的服务器 API 完成。只支持白名单命令。</div>
+    </header>
+
+    <section class="card">
+      <span class="pill">只读优先 · 高风险需确认</span>
+      <label for="api">API 地址</label>
+      <input id="api" placeholder="https://your-domain.example.com" />
+      <label for="token">访问 Token</label>
+      <input id="token" type="password" placeholder="保存在手机本地浏览器" />
+      <div class="fine">不要把 Token 写进 GitHub 仓库。建议服务端加 HTTPS、Token、IP 限制和命令白名单。</div>
+    </section>
+
+    <section class="card">
+      <div class="grid">
+        <button onclick="run('menu')">菜单</button>
+        <button onclick="run('status')" class="secondary">状态</button>
+        <button onclick="run('tasks')" class="secondary">任务</button>
+        <button onclick="run('brief')">简报</button>
+        <button onclick="run('stock')" class="warn">股票</button>
+        <button onclick="run('courseware')" class="warn">课件</button>
+      </div>
+      <label for="custom">自定义白名单命令</label>
+      <textarea id="custom" placeholder="例如：tasks 或 status"></textarea>
+      <button onclick="runCustom()" class="danger">执行命令</button>
+    </section>
+
+    <section class="card">
+      <label>输出</label>
+      <div id="out" class="out">等待操作...</div>
+    </section>
+  </div>
+
+<script>
+const apiEl = document.getElementById('api');
+const tokenEl = document.getElementById('token');
+const out = document.getElementById('out');
+apiEl.value = localStorage.getItem('hermes_api') || '';
+tokenEl.value = localStorage.getItem('hermes_token') || '';
+function save() {
+  localStorage.setItem('hermes_api', apiEl.value.trim());
+  localStorage.setItem('hermes_token', tokenEl.value.trim());
+}
+async function run(command) {
+  save();
+  const base = apiEl.value.trim().replace(/\/$/, '');
+  const token = tokenEl.value.trim();
+  if (!base || !token) { out.textContent = '请先填写 API 地址和 Token。'; return; }
+  out.textContent = '执行中：' + command;
+  try {
+    const res = await fetch(base + '/api/mobile/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ command })
+    });
+    const data = await res.json();
+    out.textContent = data.output || JSON.stringify(data, null, 2);
+  } catch (e) {
+    out.textContent = '请求失败：' + e.message;
+  }
+}
+function runCustom() {
+  const v = document.getElementById('custom').value.trim();
+  if (!v) { out.textContent = '请输入命令。'; return; }
+  run(v);
+}
+</script>
+</body>
+</html>
