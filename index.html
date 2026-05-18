@@ -1,5 +1,291 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><title>Hermes Mobile Console</title><style>
-:root{--ink:#182116;--muted:#68705f;--card:rgba(255,248,226,.9);--line:rgba(24,33,22,.14);--green:#1f6f50;--amber:#d7832c;--red:#a83b31;--blue:#2b607e;--shadow:0 22px 58px rgba(10,16,11,.27);--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:Avenir Next,Trebuchet MS,Noto Sans SC,sans-serif;--serif:Georgia,Noto Serif SC,Songti SC,serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100svh;color:var(--ink);font-family:var(--sans);background:radial-gradient(circle at 10% -5%,rgba(215,131,44,.46),transparent 25rem),radial-gradient(circle at 100% 5%,rgba(31,111,80,.5),transparent 22rem),linear-gradient(145deg,#151a12 0%,#24311f 41%,#eadfbd 41.2%,#faefd0 100%);padding:env(safe-area-inset-top) 13px calc(84px + env(safe-area-inset-bottom))}.wrap{max-width:860px;margin:0 auto}.hero{color:#fff3cd;padding:22px 4px 14px}.eyebrow{font:900 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;opacity:.78}h1{margin:8px 0;font:900 clamp(34px,11vw,70px)/.86 var(--serif);letter-spacing:-.06em;max-width:9ch}.subtitle{max-width:35rem;color:rgba(255,243,205,.78);font-size:14px;line-height:1.55}.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.chip,.pill{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:8px 11px;background:rgba(255,243,205,.13);color:#fff3cd;border:1px solid rgba(255,243,205,.18);font:900 12px/1 var(--mono)}.pill{margin:3px 5px 0 0;padding:5px 8px;background:rgba(31,111,80,.1);color:var(--green);border:0}.dot{width:8px;height:8px;border-radius:50%;background:#e9bd58;box-shadow:0 0 0 4px rgba(255,255,255,.08)}.dot.ok{background:#79d98c}.dot.bad{background:#ff7969}.panel{background:var(--card);border:1px solid rgba(255,255,255,.35);border-radius:28px;box-shadow:var(--shadow);backdrop-filter:blur(18px);padding:15px;margin:13px 0}.panel.dark{background:rgba(17,26,20,.93);color:#fff3cd;border-color:rgba(255,243,205,.16)}.head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:3px 2px 13px}h2{margin:0;font:900 21px/1.08 var(--serif);letter-spacing:-.035em}.hint{color:var(--muted);font-size:12px;line-height:1.35}.dark .hint{color:rgba(255,243,205,.62)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.action{appearance:none;border:0;text-align:left;min-height:96px;border-radius:22px;padding:15px;background:var(--green);color:white;box-shadow:0 13px 24px rgba(31,111,80,.22);font-family:var(--sans);position:relative;overflow:hidden}.action:before{content:"";position:absolute;right:-32px;bottom:-42px;width:98px;height:98px;border-radius:999px;background:rgba(255,255,255,.13)}.action b{display:block;font-size:19px;line-height:1.05;margin-bottom:8px;letter-spacing:-.03em}.action span{display:block;font-size:12px;line-height:1.35;opacity:.84}.action:active,.mini:active{transform:translateY(1px) scale(.992)}.secondary{background:#1d2d27}.amber{background:var(--amber)}.blue{background:var(--blue)}.red{background:var(--red)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.stat{border:1px solid var(--line);border-radius:18px;padding:11px;background:rgba(255,255,255,.42)}.stat b{display:block;font:900 24px/1 var(--serif)}.stat span{font:800 11px/1 var(--mono);color:var(--muted)}.list{display:grid;gap:9px}.item{border:1px solid var(--line);background:rgba(255,255,255,.46);border-radius:20px;padding:12px}.item-title{font-weight:900;line-height:1.25}.item-meta{margin-top:7px;color:var(--muted);font:800 11px/1.35 var(--mono)}label{display:block;margin:11px 0 7px;color:var(--muted);font:900 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}input,textarea,select{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.72);color:var(--ink);border-radius:17px;padding:13px 14px;font:14px/1.45 var(--mono);outline:none}textarea{min-height:86px;resize:vertical}.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.mini{border:1px solid var(--line);background:rgba(255,255,255,.64);color:var(--ink);border-radius:15px;min-height:44px;padding:0 12px;font:900 13px/1 var(--sans)}.mini.primary{background:var(--green);color:white;border-color:var(--green)}.mini.ghost{background:transparent}details summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}details summary::-webkit-details-marker{display:none}.result{white-space:pre-wrap;word-break:break-word;max-height:46svh;overflow:auto;border-radius:20px;background:rgba(255,243,205,.08);border:1px solid rgba(255,243,205,.12);padding:14px;font:14px/1.62 var(--sans)}.empty{color:rgba(255,243,205,.66);line-height:1.55}.tabs{position:fixed;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));z-index:5;max-width:860px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:7px;border-radius:24px;background:rgba(18,21,15,.9);backdrop-filter:blur(18px);border:1px solid rgba(255,243,205,.14);box-shadow:0 14px 40px rgba(0,0,0,.28)}.tab{color:rgba(255,243,205,.73);text-decoration:none;text-align:center;padding:10px 4px;border-radius:17px;font:900 12px/1 var(--sans)}.tab.active{color:#142017;background:#fff3cd}.toast{position:fixed;left:18px;right:18px;top:max(12px,env(safe-area-inset-top));z-index:10;display:none;max-width:780px;margin:0 auto;padding:13px 14px;border-radius:18px;background:#142017;color:#fff3cd;box-shadow:0 14px 45px rgba(0,0,0,.32);font-size:13px;line-height:1.45}.toast.show{display:block}@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:390px){.grid,.stats{grid-template-columns:1fr 1fr}.tab{font-size:11px}}
-</style></head><body><div class="toast" id="toast"></div><main class="wrap"><header class="hero" id="top"><div class="eyebrow">Hermes Private Assistant</div><h1>手机控制台</h1><div class="subtitle">结构化状态、任务创建、Agent 会话只读管理。GitHub Pages 只放界面，操作仍走 Tailscale 私网 API。</div><div class="bar"><span class="chip"><i class="dot" id="connDot"></i><span id="connText">未检测</span></span><span class="chip" id="apiShort">API 未设置</span><span class="chip" id="clock">--</span></div></header><section class="panel" id="overview"><div class="head"><h2>总览</h2><button class="mini primary" id="refresh">刷新</button></div><div class="stats"><div class="stat"><b id="readyN">-</b><span>READY</span></div><div class="stat"><b id="runN">-</b><span>RUNNING</span></div><div class="stat"><b id="blockN">-</b><span>BLOCKED</span></div><div class="stat"><b id="sessN">-</b><span>SESSIONS</span></div></div><div class="bar" id="svcBar"></div><div class="grid" style="margin-top:12px"><button class="action" data-command="status"><b>状态</b><span>服务、通道、看板概览</span></button><button class="action secondary" data-command="tasks"><b>任务</b><span>文本版任务列表</span></button><button class="action amber" data-command="brief"><b>简报</b><span>今日手机摘要</span></button><button class="action blue" data-command="courseware"><b>课件</b><span>教师工作流入口</span></button><button class="action red" data-command="stock"><b>股票</b><span>数据源和报告状态</span></button><button class="action secondary" data-command="menu"><b>菜单</b><span>全部文字命令</span></button></div></section><section class="panel" id="tasks"><div class="head"><h2>任务</h2><span class="hint">Kanban ready/running</span></div><div class="list" id="taskList"><div class="item">等待刷新...</div></div><details style="margin-top:12px" open><summary><h2>手机发起任务</h2><span class="hint">只创建，不直接执行高风险动作</span></summary><label>类型</label><select id="taskKind"><option value="general">通用</option><option value="teacher">教师/课件</option><option value="stock">股票研究</option><option value="ops">助手运维</option></select><label>标题</label><input id="taskTitle" placeholder="例如：分析最新收到的 PDF 并生成教案大纲"/><label>说明</label><textarea id="taskBody" placeholder="补充目标、文件名、输出格式、限制条件。交易、删除、对外发送会要求二次确认。"></textarea><button class="mini primary" id="createTask" style="width:100%;margin-top:10px">加入任务队列</button></details></section><section class="panel" id="sessions"><div class="head"><h2>Agent 会话</h2><button class="mini" id="refreshSessions">刷新</button></div><div class="list" id="sessionList"><div class="item">等待刷新...</div></div></section><section class="panel"><details><summary><h2>自定义命令</h2><span class="hint">白名单，不是 shell</span></summary><label>命令</label><input id="customCmd" placeholder="menu / status / tasks / brief / stock / courseware"/><button class="mini primary" id="runCustom" style="width:100%;margin-top:10px">执行白名单命令</button><p class="hint">用途：手机快速触发已批准的只读/低风险能力。更复杂的问题请用“手机发起任务”，让 Agent 进入 Kanban 队列处理。</p></details></section><section class="panel dark" id="resultPanel"><div class="head"><div><h2 id="resultTitle">结果</h2><div class="hint" id="resultMeta">尚未发送命令</div></div><button class="mini ghost" id="copyResult" style="color:#fff3cd;border-color:rgba(255,243,205,.18);flex:0 0 auto">复制</button></div><div class="empty" id="emptyText">点“刷新”查看结构化状态，或点任意快捷操作。</div><div class="result" id="out" hidden></div></section><section class="panel" id="settings"><details open><summary><h2>连接设置</h2><span class="hint">只保存在本机浏览器</span></summary><label>API 地址</label><div class="row"><input id="api" autocomplete="off" placeholder="https://vm-0-2-opencloudos.tail8da8a7.ts.net"/><button class="mini" id="fillApi" style="flex:0 0 86px">填默认</button></div><label>访问 Token</label><div class="row"><input id="token" type="password" autocomplete="current-password" placeholder="Mobile API Token"/><button class="mini" id="toggleToken" style="flex:0 0 70px">显示</button></div><div class="row" style="margin-top:10px"><button class="mini primary" id="health">测试连接</button><button class="mini" id="clear">清空本机设置</button></div><p class="hint">第一次手机使用：安装并登录 Tailscale，同账号或被授权到同一 tailnet。Token 不会写入 GitHub。</p></details></section></main><nav class="tabs"><a class="tab active" href="#overview">总览</a><a class="tab" href="#tasks">任务</a><a class="tab" href="#sessions">会话</a><a class="tab" href="#resultPanel">结果</a><a class="tab" href="#settings">设置</a></nav><script>
-const DEFAULT_API='https://vm-0-2-opencloudos.tail8da8a7.ts.net';const $=id=>document.getElementById(id);const api=$('api'),token=$('token'),out=$('out'),empty=$('emptyText'),toastEl=$('toast');api.value=localStorage.getItem('hermes_api')||DEFAULT_API;token.value=localStorage.getItem('hermes_token')||'';tick();setInterval(tick,1000);chrome();function tick(){$('clock').textContent=new Date().toLocaleTimeString('zh-CN',{hour12:false})}function base(){return api.value.trim().replace(/\/$/,'')}function save(){localStorage.setItem('hermes_api',base());localStorage.setItem('hermes_token',token.value.trim());chrome()}function chrome(){try{$('apiShort').textContent=new URL(base()).host}catch{$('apiShort').textContent='API 待设置'}}function toast(s){toastEl.textContent=s;toastEl.classList.add('show');clearTimeout(window.t);window.t=setTimeout(()=>toastEl.classList.remove('show'),2600)}function conn(ok,text){$('connDot').className='dot '+(ok===true?'ok':ok===false?'bad':'');$('connText').textContent=text}function authHeaders(){return{'Content-Type':'application/json','Authorization':'Bearer '+token.value.trim()}}function need(){save();if(!base()){err('缺少 API 地址','请填写 API 地址');return false}if(!token.value.trim()){err('缺少 Token','请填写 Mobile API Token');return false}return true}function show(title,meta,text){$('resultTitle').textContent=title;$('resultMeta').textContent=meta||new Date().toLocaleString('zh-CN',{hour12:false});empty.hidden=true;out.hidden=false;out.textContent=text;location.hash='#resultPanel'}function err(title,msg){conn(false,'异常');show(title,'需要处理',msg)}async function getJSON(path){if(!need())throw new Error('missing config');const r=await fetch(base()+path,{headers:{Authorization:'Bearer '+token.value.trim()}});const d=await r.json().catch(()=>({ok:false,detail:'返回不是 JSON'}));if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));return d}async function postJSON(path,body){if(!need())throw new Error('missing config');const r=await fetch(base()+path,{method:'POST',headers:authHeaders(),body:JSON.stringify(body)});const d=await r.json().catch(()=>({ok:false,detail:'返回不是 JSON'}));if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));return d}function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}function taskCard(t){return`<div class="item"><div class="item-title">${esc(t.title)}</div><div class="item-meta"><span class="pill">${esc(t.status)}</span><span class="pill">P${esc(t.priority)}</span><span class="pill">${esc(t.id)}</span></div>${t.last_failure_error?`<div class="item-meta">${esc(t.last_failure_error)}</div>`:''}</div>`}function sessionCard(s){return`<div class="item"><div class="item-title">${esc(s.platform)} · ${esc(s.display_name)}</div><div class="item-meta"><span class="pill">${esc(s.chat_type)}</span><span class="pill">${esc(s.session_id)}</span><span class="pill">${s.suspended?'suspended':'active'}</span></div><div class="item-meta">updated: ${esc(s.updated_at||'-')}</div><button class="mini" style="width:100%;margin-top:9px" onclick="sessionDetail('${esc(s.session_id)}')">查看尾部记录</button></div>`}function renderSnapshot(d){conn(true,'已连接');const c=d.tasks.counts||{};$('readyN').textContent=c.ready||0;$('runN').textContent=c.running||0;$('blockN').textContent=c.blocked||0;$('sessN').textContent=d.sessions.count||0;$('svcBar').innerHTML=Object.entries(d.services||{}).map(([k,v])=>`<span class="pill">${k}: ${v}</span>`).join('')+(d.stock.has_report?'<span class="pill">stock report: yes</span>':'<span class="pill">stock report: no</span>');$('taskList').innerHTML=(d.tasks.items||[]).map(taskCard).join('')||'<div class="item">没有任务</div>';$('sessionList').innerHTML=(d.sessions.items||[]).map(sessionCard).join('')||'<div class="item">没有会话</div>'}async function refresh(){try{conn(null,'刷新中');renderSnapshot(await getJSON('/api/mobile/snapshot'));toast('已刷新')}catch(e){err('刷新失败',e.message)}}async function refreshSessions(){try{const d=await getJSON('/api/mobile/sessions');$('sessionList').innerHTML=(d.items||[]).map(sessionCard).join('')||'<div class="item">没有会话</div>';conn(true,'已连接')}catch(e){err('会话刷新失败',e.message)}}async function sessionDetail(id){try{const d=await getJSON('/api/mobile/sessions/'+encodeURIComponent(id));show('会话尾部记录',id,(d.item.tail||[]).join('\n\n')||'没有 transcript 尾部记录')}catch(e){err('会话读取失败',e.message)}}async function run(command){try{show('执行中',command,'正在请求 Hermes Mobile API...');const d=await postJSON('/api/mobile/run',{command});conn(!!d.ok,d.ok?'已连接':'命令异常');show(({menu:'菜单',status:'状态',tasks:'任务',brief:'简报',stock:'股票',courseware:'课件'})[command]||command,command,d.output||JSON.stringify(d,null,2))}catch(e){err('请求失败',e.message)}}async function createTask(){try{const title=$('taskTitle').value.trim(),body=$('taskBody').value.trim(),kind=$('taskKind').value;if(!title)return err('标题为空','请填写任务标题');const d=await postJSON('/api/mobile/task',{title,body,kind,priority:kind==='teacher'?75:kind==='stock'?70:55});toast('任务已创建：'+d.item.id);$('taskTitle').value='';$('taskBody').value='';await refresh()}catch(e){err('创建任务失败',e.message)}}async function health(){save();try{const r=await fetch(base()+'/api/mobile/health');const d=await r.json();if(!r.ok||!d.ok)throw new Error('health 异常');conn(true,'API 可达');toast('API 可达 · '+(d.version||''))}catch(e){err('API 不可达','确认手机已连接 Tailscale。\n'+DEFAULT_API+'\n\n'+e.message)}}document.querySelectorAll('[data-command]').forEach(b=>b.addEventListener('click',()=>run(b.dataset.command)));$('refresh').onclick=refresh;$('refreshSessions').onclick=refreshSessions;$('createTask').onclick=createTask;$('runCustom').onclick=()=>{const v=$('customCmd').value.trim();if(!v)return err('命令为空','请输入白名单命令');run(v)};$('health').onclick=health;$('fillApi').onclick=()=>{api.value=DEFAULT_API;save();toast('已填默认 API')};$('toggleToken').onclick=()=>{token.type=token.type==='password'?'text':'password';$('toggleToken').textContent=token.type==='password'?'显示':'隐藏'};$('clear').onclick=()=>{localStorage.removeItem('hermes_api');localStorage.removeItem('hermes_token');api.value=DEFAULT_API;token.value='';save();conn(null,'未检测');toast('已清空本机 Token')};$('copyResult').onclick=async()=>{try{await navigator.clipboard.writeText(out.hidden?'':out.textContent);toast('已复制')}catch{toast('复制被浏览器拒绝')}};api.onchange=save;token.onchange=save;const tabs=[...document.querySelectorAll('.tab')],secs=tabs.map(t=>document.querySelector(t.getAttribute('href'))).filter(Boolean),obs=new IntersectionObserver(es=>{const v=es.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(v)tabs.forEach(t=>t.classList.toggle('active',t.getAttribute('href')==='#'+v.target.id))},{rootMargin:'-25% 0px -60% 0px',threshold:[.01,.2,.5]});secs.forEach(s=>obs.observe(s));
-</script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Hermes Mobile Console</title>
+  <style>
+    :root {
+      --ink: #172016;
+      --muted: #68705f;
+      --card: rgba(255, 248, 226, .92);
+      --card2: rgba(255, 255, 255, .48);
+      --line: rgba(24, 33, 22, .14);
+      --green: #1f6f50;
+      --green-dark: #14261d;
+      --amber: #d7832c;
+      --red: #a83b31;
+      --blue: #2b607e;
+      --cream: #fff3cd;
+      --shadow: 0 22px 58px rgba(10, 16, 11, .27);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --sans: Avenir Next, Trebuchet MS, Noto Sans SC, sans-serif;
+      --serif: Georgia, Noto Serif SC, Songti SC, serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100svh;
+      color: var(--ink);
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at 10% -5%, rgba(215, 131, 44, .46), transparent 25rem),
+        radial-gradient(circle at 100% 5%, rgba(31, 111, 80, .5), transparent 22rem),
+        linear-gradient(145deg, #151a12 0%, #24311f 41%, #eadfbd 41.2%, #faefd0 100%);
+      padding: env(safe-area-inset-top) 13px calc(86px + env(safe-area-inset-bottom));
+    }
+    .wrap { max-width: 880px; margin: 0 auto; }
+    .hero { color: var(--cream); padding: 22px 4px 14px; }
+    .eyebrow { font: 900 11px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; opacity: .78; }
+    h1 { margin: 8px 0; font: 900 clamp(34px, 11vw, 70px)/.86 var(--serif); letter-spacing: -.06em; max-width: 9ch; }
+    .subtitle { max-width: 35rem; color: rgba(255, 243, 205, .78); font-size: 14px; line-height: 1.55; }
+    .bar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; min-width: 0; }
+    .chip, .pill {
+      display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; padding: 8px 11px;
+      background: rgba(255, 243, 205, .13); color: var(--cream); border: 1px solid rgba(255, 243, 205, .18);
+      font: 900 12px/1 var(--mono); max-width: 100%; min-width: 0;
+    }
+    .pill { margin: 3px 5px 0 0; padding: 5px 8px; background: rgba(31,111,80,.1); color: var(--green); border: 0; }
+    .pill span, .clip { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; background: #e9bd58; box-shadow: 0 0 0 4px rgba(255,255,255,.08); }
+    .dot.ok { background: #79d98c; }
+    .dot.bad { background: #ff7969; }
+    .panel { background: var(--card); border: 1px solid rgba(255,255,255,.35); border-radius: 28px; box-shadow: var(--shadow); backdrop-filter: blur(18px); padding: 15px; margin: 13px 0; min-width: 0; }
+    .panel.dark { background: rgba(17,26,20,.93); color: var(--cream); border-color: rgba(255,243,205,.16); }
+    .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; margin: 3px 2px 13px; min-width: 0; }
+    .head > div { min-width: 0; }
+    h2 { margin: 0; font: 900 21px/1.08 var(--serif); letter-spacing: -.035em; }
+    .hint { color: var(--muted); font-size: 12px; line-height: 1.35; }
+    .dark .hint { color: rgba(255,243,205,.62); }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .action { appearance: none; border: 0; text-align: left; min-height: 96px; border-radius: 22px; padding: 15px; background: var(--green); color: white; box-shadow: 0 13px 24px rgba(31,111,80,.22); font-family: var(--sans); position: relative; overflow: hidden; }
+    .action:before { content: ""; position: absolute; right: -32px; bottom: -42px; width: 98px; height: 98px; border-radius: 999px; background: rgba(255,255,255,.13); }
+    .action b { display: block; font-size: 19px; line-height: 1.05; margin-bottom: 8px; letter-spacing: -.03em; }
+    .action span { display: block; font-size: 12px; line-height: 1.35; opacity: .84; }
+    .action:active, .mini:active { transform: translateY(1px) scale(.992); }
+    .secondary { background: #1d2d27; }
+    .amber { background: var(--amber); }
+    .blue { background: var(--blue); }
+    .red { background: var(--red); }
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .stat { border: 1px solid var(--line); border-radius: 18px; padding: 11px; background: var(--card2); min-width: 0; }
+    .stat b { display: block; font: 900 24px/1 var(--serif); }
+    .stat span { font: 800 11px/1 var(--mono); color: var(--muted); }
+    .list { display: grid; gap: 9px; min-width: 0; }
+    .item { border: 1px solid var(--line); background: var(--card2); border-radius: 20px; padding: 12px; min-width: 0; overflow: hidden; }
+    .item-title { font-weight: 900; line-height: 1.25; overflow-wrap: anywhere; }
+    .item-meta { margin-top: 7px; color: var(--muted); font: 800 11px/1.35 var(--mono); overflow-wrap: anywhere; min-width: 0; }
+    .item-actions { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; margin-top: 10px; }
+    .detail { display: none; margin-top: 10px; padding: 11px; border-radius: 16px; background: rgba(20,38,29,.08); border: 1px solid rgba(20,38,29,.08); white-space: pre-wrap; overflow-wrap: anywhere; font: 12px/1.55 var(--mono); max-height: 32svh; overflow: auto; }
+    .detail.open { display: block; }
+    label { display: block; margin: 11px 0 7px; color: var(--muted); font: 900 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+    input, textarea, select { width: 100%; border: 1px solid var(--line); background: rgba(255,255,255,.72); color: var(--ink); border-radius: 17px; padding: 13px 14px; font: 14px/1.45 var(--mono); outline: none; min-width: 0; }
+    textarea { min-height: 86px; resize: vertical; }
+    .row { display: flex; gap: 8px; align-items: center; min-width: 0; }
+    .row > * { flex: 1; min-width: 0; }
+    .mini { border: 1px solid var(--line); background: rgba(255,255,255,.64); color: var(--ink); border-radius: 15px; min-height: 44px; padding: 0 12px; font: 900 13px/1 var(--sans); }
+    .mini.primary { background: var(--green); color: white; border-color: var(--green); }
+    .mini.ghost { background: transparent; }
+    details summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    details summary::-webkit-details-marker { display: none; }
+    .result { white-space: pre-wrap; word-break: break-word; max-height: 42svh; overflow: auto; border-radius: 20px; background: rgba(255,243,205,.08); border: 1px solid rgba(255,243,205,.12); padding: 14px; font: 14px/1.62 var(--sans); }
+    .empty { color: rgba(255,243,205,.66); line-height: 1.55; }
+    .tabs { position: fixed; left: 10px; right: 10px; bottom: max(10px, env(safe-area-inset-bottom)); z-index: 5; max-width: 880px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; padding: 7px; border-radius: 24px; background: rgba(18,21,15,.9); backdrop-filter: blur(18px); border: 1px solid rgba(255,243,205,.14); box-shadow: 0 14px 40px rgba(0,0,0,.28); }
+    .tab { color: rgba(255,243,205,.73); text-decoration: none; text-align: center; padding: 10px 4px; border-radius: 17px; font: 900 12px/1 var(--sans); }
+    .tab.active { color: #142017; background: var(--cream); }
+    .toast { position: fixed; left: 18px; right: 18px; top: max(12px, env(safe-area-inset-top)); z-index: 10; display: none; max-width: 780px; margin: 0 auto; padding: 13px 14px; border-radius: 18px; background: #142017; color: var(--cream); box-shadow: 0 14px 45px rgba(0,0,0,.32); font-size: 13px; line-height: 1.45; }
+    .toast.show { display: block; }
+    @media (min-width: 700px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 430px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .grid { grid-template-columns: 1fr; } .tab { font-size: 11px; } .item-actions { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="toast" id="toast"></div>
+  <main class="wrap">
+    <header class="hero" id="top">
+      <div class="eyebrow">Hermes Private Assistant</div>
+      <h1>手机控制台</h1>
+      <div class="subtitle">结构化状态、任务创建、Agent 会话只读管理。每个模块独立刷新和阅读，白名单命令只作为补充工具。</div>
+      <div class="bar">
+        <span class="chip"><i class="dot" id="connDot"></i><span id="connText">未检测</span></span>
+        <span class="chip"><span class="clip" id="apiShort">API 未设置</span></span>
+        <span class="chip" id="clock">--</span>
+      </div>
+    </header>
+
+    <section class="panel" id="overview">
+      <div class="head">
+        <div><h2>总览</h2><div class="hint" id="snapshotTime">点击刷新获取最新状态</div></div>
+        <button class="mini primary" id="refreshAll">刷新全部</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="readyN">-</b><span>READY</span></div>
+        <div class="stat"><b id="runN">-</b><span>RUNNING</span></div>
+        <div class="stat"><b id="blockN">-</b><span>BLOCKED</span></div>
+        <div class="stat"><b id="sessN">-</b><span>SESSIONS</span></div>
+      </div>
+      <div class="bar" id="svcBar"></div>
+      <div class="grid" style="margin-top:12px">
+        <button class="action" data-command="status"><b>状态</b><span>文本诊断，输出到日志区</span></button>
+        <button class="action secondary" data-command="tasks"><b>任务文本</b><span>兼容旧命令输出</span></button>
+        <button class="action amber" data-command="brief"><b>简报</b><span>今日手机摘要</span></button>
+        <button class="action blue" data-command="courseware"><b>课件</b><span>教师工作流入口</span></button>
+        <button class="action red" data-command="stock"><b>股票</b><span>数据源和报告状态</span></button>
+        <button class="action secondary" data-command="menu"><b>菜单</b><span>全部文字命令</span></button>
+      </div>
+    </section>
+
+    <section class="panel" id="tasks">
+      <div class="head">
+        <div><h2>任务</h2><div class="hint">任务区独立刷新，不跳转到日志</div></div>
+        <button class="mini" id="refreshTasks">刷新任务</button>
+      </div>
+      <div class="list" id="taskList"><div class="item">等待刷新...</div></div>
+      <details style="margin-top:12px" open>
+        <summary><h2>手机发起任务</h2><span class="hint">只创建，不直接执行高风险动作</span></summary>
+        <label>类型</label>
+        <select id="taskKind"><option value="general">通用</option><option value="teacher">教师/课件</option><option value="stock">股票研究</option><option value="ops">助手运维</option></select>
+        <label>标题</label>
+        <input id="taskTitle" placeholder="例如：分析最新收到的 PDF 并生成教案大纲" />
+        <label>说明</label>
+        <textarea id="taskBody" placeholder="补充目标、文件名、输出格式、限制条件。交易、删除、对外发送会要求二次确认。"></textarea>
+        <button class="mini primary" id="createTask" style="width:100%;margin-top:10px">加入任务队列</button>
+      </details>
+    </section>
+
+    <section class="panel" id="sessions">
+      <div class="head">
+        <div><h2>Agent 会话</h2><div class="hint">长 ID 会自动折叠；详情在卡片内展开</div></div>
+        <button class="mini" id="refreshSessions">刷新会话</button>
+      </div>
+      <div class="list" id="sessionList"><div class="item">等待刷新...</div></div>
+    </section>
+
+    <section class="panel" id="custom">
+      <details>
+        <summary><h2>自定义命令</h2><span class="hint">白名单，不是 shell</span></summary>
+        <label>命令</label>
+        <input id="customCmd" placeholder="menu / status / tasks / brief / stock / courseware" />
+        <button class="mini primary" id="runCustom" style="width:100%;margin-top:10px">执行白名单命令</button>
+        <p class="hint">用途：快速触发已批准的只读/低风险能力。复杂问题请用“手机发起任务”，进入 Agent 任务队列。</p>
+      </details>
+    </section>
+
+    <section class="panel dark" id="logs">
+      <div class="head">
+        <div><h2 id="resultTitle">日志</h2><div class="hint" id="resultMeta">白名单命令和错误诊断会显示在这里</div></div>
+        <button class="mini ghost" id="copyResult" style="color:#fff3cd;border-color:rgba(255,243,205,.18);flex:0 0 auto">复制</button>
+      </div>
+      <div class="empty" id="emptyText">任务、会话和总览会在各自模块内展示，不再挤到同一个输出框。</div>
+      <div class="result" id="out" hidden></div>
+    </section>
+
+    <section class="panel" id="settings">
+      <details open>
+        <summary><h2>连接设置</h2><span class="hint">只保存在本机浏览器</span></summary>
+        <label>API 地址</label>
+        <div class="row"><input id="api" autocomplete="off" placeholder="https://vm-0-2-opencloudos.tail8da8a7.ts.net" /><button class="mini" id="fillApi" style="flex:0 0 86px">填默认</button></div>
+        <label>访问 Token</label>
+        <div class="row"><input id="token" type="password" autocomplete="current-password" placeholder="Mobile API Token" /><button class="mini" id="toggleToken" style="flex:0 0 70px">显示</button></div>
+        <div class="row" style="margin-top:10px"><button class="mini primary" id="health">测试连接</button><button class="mini" id="clear">清空本机设置</button></div>
+        <p class="hint">第一次手机使用：安装并登录 Tailscale，同账号或被授权到同一 tailnet。Token 不会写入 GitHub。</p>
+      </details>
+    </section>
+  </main>
+  <nav class="tabs"><a class="tab active" href="#overview">总览</a><a class="tab" href="#tasks">任务</a><a class="tab" href="#sessions">会话</a><a class="tab" href="#logs">日志</a><a class="tab" href="#settings">设置</a></nav>
+
+  <script>
+    const DEFAULT_API = 'https://vm-0-2-opencloudos.tail8da8a7.ts.net';
+    const $ = id => document.getElementById(id);
+    const api = $('api'), token = $('token'), out = $('out'), empty = $('emptyText'), toastEl = $('toast');
+    api.value = localStorage.getItem('hermes_api') || DEFAULT_API;
+    token.value = localStorage.getItem('hermes_token') || '';
+    tick(); setInterval(tick, 1000); chrome();
+
+    function tick(){ $('clock').textContent = new Date().toLocaleTimeString('zh-CN',{hour12:false}); }
+    function base(){ return api.value.trim().replace(/\/$/,''); }
+    function save(){ localStorage.setItem('hermes_api', base()); localStorage.setItem('hermes_token', token.value.trim()); chrome(); }
+    function chrome(){ try { $('apiShort').textContent = new URL(base()).host; } catch { $('apiShort').textContent = 'API 待设置'; } }
+    function toast(s){ toastEl.textContent=s; toastEl.classList.add('show'); clearTimeout(window.t); window.t=setTimeout(()=>toastEl.classList.remove('show'),2600); }
+    function conn(ok,text){ $('connDot').className='dot '+(ok===true?'ok':ok===false?'bad':''); $('connText').textContent=text; }
+    function authHeaders(){ return {'Content-Type':'application/json','Authorization':'Bearer '+token.value.trim()}; }
+    function need(){ save(); if(!base()){ logError('缺少 API 地址','请填写 API 地址'); return false; } if(!token.value.trim()){ logError('缺少 Token','请填写 Mobile API Token'); return false; } return true; }
+    function esc(s){ return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+    function shortId(s){ s = String(s || ''); return s.length > 18 ? s.slice(0, 8) + '...' + s.slice(-6) : s; }
+    function fmtTime(s){ if(!s) return '-'; try { return new Date(s).toLocaleString('zh-CN',{hour12:false}); } catch { return s; } }
+
+    function log(title, meta, text, jump=false){
+      $('resultTitle').textContent = title;
+      $('resultMeta').textContent = meta || new Date().toLocaleString('zh-CN',{hour12:false});
+      empty.hidden = true; out.hidden = false; out.textContent = text;
+      if(jump) location.hash = '#logs';
+    }
+    function logError(title,msg){ conn(false,'异常'); log(title,'需要处理',msg,true); }
+    function setInline(id, text, open=true){ const el = $(id); if(!el) return; el.textContent = text; el.classList.toggle('open', open); }
+
+    async function getJSON(path){
+      if(!need()) throw new Error('missing config');
+      const r = await fetch(base()+path,{headers:{Authorization:'Bearer '+token.value.trim()}});
+      const d = await r.json().catch(()=>({ok:false,detail:'返回不是 JSON'}));
+      if(!r.ok) throw new Error(d.detail || ('HTTP '+r.status));
+      return d;
+    }
+    async function postJSON(path,body){
+      if(!need()) throw new Error('missing config');
+      const r = await fetch(base()+path,{method:'POST',headers:authHeaders(),body:JSON.stringify(body)});
+      const d = await r.json().catch(()=>({ok:false,detail:'返回不是 JSON'}));
+      if(!r.ok) throw new Error(d.detail || ('HTTP '+r.status));
+      return d;
+    }
+
+    function taskCard(t){
+      const body = t.body ? `<div class="item-meta">${esc(t.body).slice(0,220)}</div>` : '';
+      return `<div class="item"><div class="item-title">${esc(t.title)}</div><div class="item-meta"><span class="pill"><span>${esc(t.status)}</span></span><span class="pill"><span>P${esc(t.priority)}</span></span><span class="pill"><span>${esc(t.id)}</span></span></div>${body}${t.last_failure_error?`<div class="item-meta">${esc(t.last_failure_error)}</div>`:''}</div>`;
+    }
+    function sessionCard(s){
+      const id = esc(s.session_id);
+      const detailId = 'sessionDetail_' + id.replace(/[^a-zA-Z0-9_-]/g,'_');
+      return `<div class="item"><div class="item-title">${esc(s.platform)} · ${esc(s.display_name)}</div><div class="item-meta"><span class="pill"><span>${esc(s.chat_type)}</span></span><span class="pill" title="${id}"><span>${esc(shortId(s.session_id))}</span></span><span class="pill"><span>${s.suspended?'suspended':'active'}</span></span></div><div class="item-meta">updated: ${esc(fmtTime(s.updated_at))}</div><div class="item-meta">tokens: ${esc(s.last_prompt_tokens || 0)} · transcript: ${s.transcript_exists ? Math.round((s.transcript_size || 0)/1024)+'KB' : 'none'}</div><div class="item-actions"><button class="mini" onclick="sessionDetail('${id}','${detailId}')">展开记录</button><button class="mini" onclick="copyText('${id}')">复制 ID</button></div><div class="detail" id="${detailId}"></div></div>`;
+    }
+    function renderSnapshot(d){
+      conn(true,'已连接');
+      const c = d.tasks.counts || {};
+      $('readyN').textContent = c.ready || 0;
+      $('runN').textContent = c.running || 0;
+      $('blockN').textContent = c.blocked || 0;
+      $('sessN').textContent = d.sessions.count || 0;
+      $('snapshotTime').textContent = '更新：' + fmtTime(d.time);
+      $('svcBar').innerHTML = Object.entries(d.services || {}).map(([k,v]) => `<span class="pill"><span>${esc(k)}: ${esc(v)}</span></span>`).join('') + (d.stock.has_report ? '<span class="pill"><span>stock report: yes</span></span>' : '<span class="pill"><span>stock report: no</span></span>');
+      renderTasks(d.tasks.items || []);
+      renderSessions(d.sessions.items || []);
+    }
+    function renderTasks(items){ $('taskList').innerHTML = items.map(taskCard).join('') || '<div class="item">没有任务</div>'; }
+    function renderSessions(items){ $('sessionList').innerHTML = items.map(sessionCard).join('') || '<div class="item">没有会话</div>'; }
+
+    async function refreshAll(){ try { conn(null,'刷新中'); renderSnapshot(await getJSON('/api/mobile/snapshot')); toast('全部已刷新'); } catch(e){ logError('刷新失败', e.message); } }
+    async function refreshTasks(){ try { conn(null,'刷新任务'); const d = await getJSON('/api/mobile/snapshot'); renderTasks((d.tasks || {}).items || []); const c=(d.tasks||{}).counts||{}; $('readyN').textContent=c.ready||0; $('runN').textContent=c.running||0; $('blockN').textContent=c.blocked||0; conn(true,'已连接'); toast('任务已刷新'); } catch(e){ logError('任务刷新失败', e.message); } }
+    async function refreshSessions(){ try { conn(null,'刷新会话'); const d = await getJSON('/api/mobile/sessions'); renderSessions(d.items || []); $('sessN').textContent=(d.items||[]).length; conn(true,'已连接'); toast('会话已刷新'); } catch(e){ logError('会话刷新失败', e.message); } }
+    async function sessionDetail(id, detailId){ try { setInline(detailId, '读取中...'); const d = await getJSON('/api/mobile/sessions/'+encodeURIComponent(id)); setInline(detailId, (d.item.tail || []).join('\n\n') || '没有 transcript 尾部记录'); conn(true,'已连接'); } catch(e){ setInline(detailId, '读取失败：'+e.message); conn(false,'异常'); } }
+    async function run(command){ try { log('执行中', command, '正在请求 Hermes Mobile API...', true); const d = await postJSON('/api/mobile/run',{command}); conn(!!d.ok,d.ok?'已连接':'命令异常'); log(({menu:'菜单',status:'状态',tasks:'任务',brief:'简报',stock:'股票',courseware:'课件'})[command]||command, command, d.output || JSON.stringify(d,null,2), true); } catch(e){ logError('请求失败', e.message); } }
+    async function createTask(){ try { const title=$('taskTitle').value.trim(), body=$('taskBody').value.trim(), kind=$('taskKind').value; if(!title) return logError('标题为空','请填写任务标题'); const d=await postJSON('/api/mobile/task',{title,body,kind,priority:kind==='teacher'?75:kind==='stock'?70:55}); toast('任务已创建：'+d.item.id); $('taskTitle').value=''; $('taskBody').value=''; await refreshTasks(); location.hash='#tasks'; } catch(e){ logError('创建任务失败', e.message); } }
+    async function health(){ save(); try { const r=await fetch(base()+'/api/mobile/health'); const d=await r.json(); if(!r.ok||!d.ok) throw new Error('health 异常'); conn(true,'API 可达'); toast('API 可达 · '+(d.version||'')); } catch(e){ logError('API 不可达','确认手机已连接 Tailscale。\n'+DEFAULT_API+'\n\n'+e.message); } }
+    async function copyText(text){ try { await navigator.clipboard.writeText(text); toast('已复制'); } catch { toast('复制被浏览器拒绝'); } }
+
+    document.querySelectorAll('[data-command]').forEach(b=>b.addEventListener('click',()=>run(b.dataset.command)));
+    $('refreshAll').onclick = refreshAll;
+    $('refreshTasks').onclick = refreshTasks;
+    $('refreshSessions').onclick = refreshSessions;
+    $('createTask').onclick = createTask;
+    $('runCustom').onclick = () => { const v=$('customCmd').value.trim(); if(!v) return logError('命令为空','请输入白名单命令'); run(v); };
+    $('health').onclick = health;
+    $('fillApi').onclick = () => { api.value=DEFAULT_API; save(); toast('已填默认 API'); };
+    $('toggleToken').onclick = () => { token.type = token.type === 'password' ? 'text' : 'password'; $('toggleToken').textContent = token.type === 'password' ? '显示' : '隐藏'; };
+    $('clear').onclick = () => { localStorage.removeItem('hermes_api'); localStorage.removeItem('hermes_token'); api.value=DEFAULT_API; token.value=''; save(); conn(null,'未检测'); toast('已清空本机 Token'); };
+    $('copyResult').onclick = async () => { try { await navigator.clipboard.writeText(out.hidden ? '' : out.textContent); toast('已复制'); } catch { toast('复制被浏览器拒绝'); } };
+    api.onchange = save; token.onchange = save;
+    const tabs=[...document.querySelectorAll('.tab')], secs=tabs.map(t=>document.querySelector(t.getAttribute('href'))).filter(Boolean), obs=new IntersectionObserver(es=>{ const v=es.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0]; if(v) tabs.forEach(t=>t.classList.toggle('active', t.getAttribute('href') === '#'+v.target.id)); },{rootMargin:'-25% 0px -60% 0px',threshold:[.01,.2,.5]});
+    secs.forEach(s=>obs.observe(s));
+  </script>
+</body>
+</html>
