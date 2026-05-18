@@ -5,139 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Hermes Mobile Console</title>
   <style>
-    :root {
-      --bg: #f6f1e8;
-      --ink: #17201b;
-      --muted: #6f766f;
-      --card: rgba(255,255,255,.78);
-      --line: rgba(23,32,27,.14);
-      --accent: #0f6b4f;
-      --accent2: #d26b31;
-      --danger: #a83232;
-      --shadow: 0 18px 50px rgba(38, 32, 22, .14);
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 12% 8%, rgba(210,107,49,.20), transparent 28rem),
-        radial-gradient(circle at 90% 0%, rgba(15,107,79,.22), transparent 26rem),
-        linear-gradient(135deg, #f8f0dd 0%, #eef4ed 55%, #f8efe7 100%);
-      font-family: ui-serif, Georgia, "Noto Serif SC", "Songti SC", serif;
-      min-height: 100svh;
-      padding: 18px;
-    }
-    .wrap { max-width: 760px; margin: 0 auto; }
-    header { padding: 16px 4px 14px; }
-    .eyebrow { font: 700 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
-    h1 { margin: 8px 0 6px; font-size: clamp(32px, 9vw, 58px); line-height: .92; letter-spacing: -.05em; }
-    .sub { color: var(--muted); font-size: 15px; line-height: 1.5; }
-    .card {
-      background: var(--card);
-      backdrop-filter: blur(18px);
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      box-shadow: var(--shadow);
-      padding: 16px;
-      margin: 14px 0;
-    }
-    label { display: block; font: 700 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); margin: 8px 0 7px; text-transform: uppercase; letter-spacing: .08em; }
-    input, textarea {
-      width: 100%; border: 1px solid var(--line); background: rgba(255,255,255,.72); color: var(--ink);
-      border-radius: 16px; padding: 13px 14px; font: 15px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; outline: none;
-    }
-    textarea { min-height: 90px; resize: vertical; }
-    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-    button {
-      border: 0; border-radius: 18px; padding: 15px 12px; min-height: 54px;
-      color: white; background: var(--accent); font: 800 16px/1.1 ui-sans-serif, "Noto Sans SC", sans-serif;
-      box-shadow: 0 10px 24px rgba(15,107,79,.2);
-    }
-    button.secondary { background: #25312c; }
-    button.warn { background: var(--accent2); }
-    button.danger { background: var(--danger); }
-    button:active { transform: translateY(1px) scale(.99); }
-    .out {
-      white-space: pre-wrap; word-break: break-word; min-height: 180px; max-height: 52svh; overflow: auto;
-      font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
-      background: rgba(23,32,27,.88); color: #f3efe6; border-radius: 20px; padding: 14px;
-    }
-    .fine { color: var(--muted); font-size: 12px; line-height: 1.45; }
-    .pill { display: inline-flex; gap: 6px; align-items: center; padding: 7px 10px; border-radius: 999px; background: rgba(15,107,79,.1); color: var(--accent); font: 700 12px ui-monospace, monospace; }
-    @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } body { padding: 14px; } .card { border-radius: 22px; } }
+    :root { --bg:#12150f; --paper:#fbf4df; --ink:#1b2218; --muted:#6d725f; --line:rgba(27,34,24,.15); --green:#1f6f50; --amber:#d7842c; --red:#a8392d; --blue:#285d7d; --card:rgba(255,248,225,.88); --shadow:0 20px 55px rgba(12,18,12,.26); --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; --sans:Avenir Next,Trebuchet MS,Noto Sans SC,sans-serif; --serif:Georgia,Noto Serif SC,Songti SC,serif; }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;min-height:100svh;color:var(--ink);font-family:var(--sans);background:radial-gradient(circle at 12% -8%,rgba(215,132,44,.42),transparent 25rem),radial-gradient(circle at 100% 8%,rgba(31,111,80,.48),transparent 22rem),linear-gradient(145deg,#171b12 0%,#243021 42%,#ebe0bd 42.2%,#f9f0d4 100%);padding:env(safe-area-inset-top) 13px calc(82px + env(safe-area-inset-bottom))}.wrap{max-width:820px;margin:0 auto}.hero{color:#fff4cf;padding:22px 4px 14px}.eyebrow{font:800 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;opacity:.78}h1{margin:8px 0;font:800 clamp(33px,11vw,68px)/.88 var(--serif);letter-spacing:-.055em;max-width:9ch}.subtitle{max-width:34rem;color:rgba(255,244,207,.78);font-size:14px;line-height:1.55}.statusbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.chip{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:8px 11px;background:rgba(255,244,207,.13);color:#fff4cf;border:1px solid rgba(255,244,207,.18);font:800 12px/1 var(--mono)}.dot{width:8px;height:8px;border-radius:50%;background:#aaa;box-shadow:0 0 0 4px rgba(255,255,255,.08)}.dot.ok{background:#79d98c}.dot.bad{background:#ff7b68}.dot.wait{background:#e9bd58}.panel{background:var(--card);border:1px solid rgba(255,255,255,.35);border-radius:28px;box-shadow:var(--shadow);backdrop-filter:blur(18px);padding:15px;margin:13px 0}.panel.dark{background:rgba(16,26,20,.92);color:#fff4cf;border-color:rgba(255,244,207,.16)}.section-title{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:3px 2px 13px}h2{margin:0;font:900 20px/1.1 var(--serif);letter-spacing:-.03em}.hint{color:var(--muted);font-size:12px;line-height:1.35}.dark .hint{color:rgba(255,244,207,.63)}.quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.action{appearance:none;border:0;text-align:left;min-height:98px;border-radius:22px;padding:15px;background:var(--green);color:white;box-shadow:0 13px 24px rgba(31,111,80,.22);font-family:var(--sans);position:relative;overflow:hidden}.action:before{content:"";position:absolute;inset:auto -30px -40px auto;width:95px;height:95px;border-radius:999px;background:rgba(255,255,255,.13)}.action b{display:block;font-size:19px;line-height:1.05;margin-bottom:8px;letter-spacing:-.03em}.action span{display:block;font-size:12px;line-height:1.35;opacity:.82}.action:active{transform:translateY(1px) scale(.992)}.action.secondary{background:#1d2d27}.action.amber{background:var(--amber)}.action.blue{background:var(--blue)}.action.red{background:var(--red)}.wide{grid-column:1/-1;min-height:78px}label{display:block;margin:11px 0 7px;color:var(--muted);font:900 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}input,textarea{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.72);color:var(--ink);border-radius:17px;padding:13px 14px;font:14px/1.45 var(--mono);outline:none}textarea{min-height:78px;resize:vertical}input:focus,textarea:focus{border-color:rgba(31,111,80,.65);box-shadow:0 0 0 4px rgba(31,111,80,.1)}.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.mini{border:1px solid var(--line);background:rgba(255,255,255,.64);color:var(--ink);border-radius:15px;min-height:44px;padding:0 12px;font:900 13px/1 var(--sans)}.mini.primary{background:var(--green);color:white;border-color:var(--green)}.mini.ghost{background:transparent}details summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}details summary::-webkit-details-marker{display:none}.result-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.result-meta{font:800 12px/1 var(--mono);color:rgba(255,244,207,.64);margin-top:5px}.result-title{font:900 22px/1 var(--serif);letter-spacing:-.03em}.result-body{margin-top:12px;white-space:pre-wrap;word-break:break-word;max-height:48svh;overflow:auto;border-radius:20px;background:rgba(255,244,207,.08);border:1px solid rgba(255,244,207,.12);padding:14px;font:14px/1.62 var(--sans)}.empty{color:rgba(255,244,207,.66);padding:20px 3px 4px;line-height:1.55}.tabs{position:fixed;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));z-index:5;max-width:820px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:7px;border-radius:24px;background:rgba(18,21,15,.88);backdrop-filter:blur(18px);border:1px solid rgba(255,244,207,.14);box-shadow:0 14px 40px rgba(0,0,0,.28)}.tab{color:rgba(255,244,207,.73);text-decoration:none;text-align:center;padding:10px 4px;border-radius:17px;font:900 12px/1 var(--sans)}.tab.active{color:#142017;background:#fff4cf}.toast{position:fixed;left:18px;right:18px;top:max(12px,env(safe-area-inset-top));z-index:10;display:none;max-width:760px;margin:0 auto;padding:13px 14px;border-radius:18px;background:#142017;color:#fff4cf;box-shadow:0 14px 45px rgba(0,0,0,.32);font-size:13px;line-height:1.45}.toast.show{display:block;animation:drop .22s ease-out}@keyframes drop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}@media (min-width:680px){.quick{grid-template-columns:repeat(3,1fr)}.wide{grid-column:span 2}}@media (max-width:380px){.quick{grid-template-columns:1fr}.wide{grid-column:auto}.tab{font-size:11px}}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="eyebrow">Hermes Mobile Console</div>
-      <h1>手机控制台</h1>
-      <div class="sub">静态前端可以部署到 GitHub Pages；真正执行由你的服务器 API 完成。只支持白名单命令。</div>
-    </header>
-
-    <section class="card">
-      <span class="pill">只读优先 · 高风险需确认</span>
-      <label for="api">API 地址</label>
-      <input id="api" placeholder="https://your-domain.example.com" />
-      <label for="token">访问 Token</label>
-      <input id="token" type="password" placeholder="保存在手机本地浏览器" />
-      <div class="fine">不要把 Token 写进 GitHub 仓库。建议服务端加 HTTPS、Token、IP 限制和命令白名单。</div>
-    </section>
-
-    <section class="card">
-      <div class="grid">
-        <button onclick="run('menu')">菜单</button>
-        <button onclick="run('status')" class="secondary">状态</button>
-        <button onclick="run('tasks')" class="secondary">任务</button>
-        <button onclick="run('brief')">简报</button>
-        <button onclick="run('stock')" class="warn">股票</button>
-        <button onclick="run('courseware')" class="warn">课件</button>
-      </div>
-      <label for="custom">自定义白名单命令</label>
-      <textarea id="custom" placeholder="例如：tasks 或 status"></textarea>
-      <button onclick="runCustom()" class="danger">执行命令</button>
-    </section>
-
-    <section class="card">
-      <label>输出</label>
-      <div id="out" class="out">等待操作...</div>
-    </section>
-  </div>
-
+  <div class="toast" id="toast"></div>
+  <main class="wrap">
+    <header class="hero" id="top"><div class="eyebrow">Hermes Private Assistant</div><h1>手机控制台</h1><div class="subtitle">GitHub Pages 只负责界面；实际操作走 Tailscale 私网 API。默认只开放白名单命令，不执行任意 shell。</div><div class="statusbar"><span class="chip"><i class="dot wait" id="connDot"></i><span id="connText">未检测</span></span><span class="chip" id="apiShort">API 未设置</span></div></header>
+    <section class="panel" id="overview"><div class="section-title"><h2>快速操作</h2><span class="hint">常用命令，一点即发</span></div><div class="quick"><button class="action" data-command="status"><b>状态</b><span>服务、通道、看板概览</span></button><button class="action secondary" data-command="tasks"><b>任务</b><span>查看当前 Kanban 队列</span></button><button class="action amber" data-command="brief"><b>简报</b><span>手机友好的今日摘要</span></button><button class="action blue" data-command="courseware"><b>课件</b><span>PPT/PDF/XLSX 处理入口</span></button><button class="action red" data-command="stock"><b>股票</b><span>数据源与市场报告状态</span></button><button class="action secondary" data-command="menu"><b>菜单</b><span>查看全部文字入口</span></button></div></section>
+    <section class="panel" id="tasks"><div class="section-title"><h2>任务入口</h2><span class="hint">先读任务，再决定推进</span></div><button class="action wide secondary" data-command="tasks"><b>刷新任务看板</b><span>显示 ready/running/blocked/done 和可推进项目</span></button></section>
+    <section class="panel" id="workflows"><div class="section-title"><h2>工作流</h2><span class="hint">教师与股市场景</span></div><div class="quick"><button class="action blue" data-command="courseware"><b>课件分析</b><span>查看文件处理方式和推荐话术</span></button><button class="action red" data-command="stock"><b>股票学习</b><span>查看当前股票能力和数据源状态</span></button></div></section>
+    <section class="panel"><details id="customBox"><summary><h2>自定义命令</h2><span class="hint">仍然只允许白名单</span></summary><label for="custom">命令</label><textarea id="custom" placeholder="例如：tasks、status、brief、stock、courseware"></textarea><button class="mini primary" id="runCustom">执行白名单命令</button></details></section>
+    <section class="panel dark" id="resultPanel"><div class="result-head"><div><div class="result-title" id="resultTitle">等待操作</div><div class="result-meta" id="resultMeta">尚未发送命令</div></div><button class="mini ghost" id="copyResult" style="color:#fff4cf;border-color:rgba(255,244,207,.18);flex:0 0 auto;">复制</button></div><div class="empty" id="emptyText">先点上面的“状态”或“任务”。如果手机不在同一个 Tailscale tailnet，API 会无法访问。</div><div class="result-body" id="out" hidden></div></section>
+    <section class="panel" id="settings"><details open><summary><h2>连接设置</h2><span class="hint">保存在本机浏览器</span></summary><label for="api">API 地址</label><div class="row"><input id="api" autocomplete="off" placeholder="https://vm-0-2-opencloudos.tail8da8a7.ts.net" /><button class="mini" id="fillApi" style="flex:0 0 86px;">填默认</button></div><label for="token">访问 Token</label><div class="row"><input id="token" type="password" autocomplete="current-password" placeholder="只存在手机本地" /><button class="mini" id="toggleToken" style="flex:0 0 70px;">显示</button></div><div class="row" style="margin-top:10px;"><button class="mini primary" id="health">测试连接</button><button class="mini" id="clear">清空本机设置</button></div><p class="hint">手机第一次使用需要安装并登录 Tailscale，同账号或被授权到同一个 tailnet。Token 不会上传 GitHub。</p></details></section>
+  </main>
+  <nav class="tabs" aria-label="底部导航"><a class="tab active" href="#overview">总览</a><a class="tab" href="#tasks">任务</a><a class="tab" href="#workflows">工作流</a><a class="tab" href="#resultPanel">结果</a><a class="tab" href="#settings">设置</a></nav>
 <script>
-const apiEl = document.getElementById('api');
-const tokenEl = document.getElementById('token');
-const out = document.getElementById('out');
-apiEl.value = localStorage.getItem('hermes_api') || '';
-tokenEl.value = localStorage.getItem('hermes_token') || '';
-function save() {
-  localStorage.setItem('hermes_api', apiEl.value.trim());
-  localStorage.setItem('hermes_token', tokenEl.value.trim());
-}
-async function run(command) {
-  save();
-  const base = apiEl.value.trim().replace(/\/$/, '');
-  const token = tokenEl.value.trim();
-  if (!base || !token) { out.textContent = '请先填写 API 地址和 Token。'; return; }
-  out.textContent = '执行中：' + command;
-  try {
-    const res = await fetch(base + '/api/mobile/run', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-      body: JSON.stringify({ command })
-    });
-    const data = await res.json();
-    out.textContent = data.output || JSON.stringify(data, null, 2);
-  } catch (e) {
-    out.textContent = '请求失败：' + e.message;
-  }
-}
-function runCustom() {
-  const v = document.getElementById('custom').value.trim();
-  if (!v) { out.textContent = '请输入命令。'; return; }
-  run(v);
-}
+const DEFAULT_API='https://vm-0-2-opencloudos.tail8da8a7.ts.net';const apiEl=document.getElementById('api'),tokenEl=document.getElementById('token'),out=document.getElementById('out'),emptyText=document.getElementById('emptyText'),resultTitle=document.getElementById('resultTitle'),resultMeta=document.getElementById('resultMeta'),connDot=document.getElementById('connDot'),connText=document.getElementById('connText'),apiShort=document.getElementById('apiShort'),toastEl=document.getElementById('toast');apiEl.value=localStorage.getItem('hermes_api')||DEFAULT_API;tokenEl.value=localStorage.getItem('hermes_token')||'';updateChrome();function baseUrl(){return apiEl.value.trim().replace(/\/$/,'')}function save(){localStorage.setItem('hermes_api',baseUrl());localStorage.setItem('hermes_token',tokenEl.value.trim());updateChrome()}function updateChrome(){const base=baseUrl();apiShort.textContent=base?URLSafeHost(base):'API 未设置'}function URLSafeHost(url){try{return new URL(url).host}catch{return'API 格式待确认'}}function toast(msg){toastEl.textContent=msg;toastEl.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>toastEl.classList.remove('show'),2600)}function setConn(state,text){connDot.className='dot '+state;connText.textContent=text}function requireConfig(){save();if(!baseUrl()){showError('缺少 API 地址','请在设置里填写 API 地址。');return false}if(!tokenEl.value.trim()){showError('缺少 Token','请在设置里填写 Mobile API Token。');return false}return true}function setLoading(command){resultTitle.textContent='执行中';resultMeta.textContent=command+' · 请求已发送';emptyText.hidden=true;out.hidden=false;out.textContent='正在连接 Hermes Mobile API...';setConn('wait','请求中');location.hash='#resultPanel'}function showError(title,message){resultTitle.textContent=title;resultMeta.textContent='需要处理';emptyText.hidden=true;out.hidden=false;out.textContent=message;setConn('bad','异常')}function showOutput(command,data){const ok=!!data.ok;resultTitle.textContent=ok?commandLabel(command):'执行失败';resultMeta.textContent=command+' · '+new Date().toLocaleString('zh-CN',{hour12:false});emptyText.hidden=true;out.hidden=false;out.textContent=data.output||JSON.stringify(data,null,2);setConn(ok?'ok':'bad',ok?'已连接':'命令异常')}function commandLabel(command){return({menu:'菜单',status:'状态',tasks:'任务',brief:'简报',stock:'股票',courseware:'课件'})[command]||command}async function health(){save();if(!baseUrl())return showError('缺少 API 地址','请先填写 API 地址。');setConn('wait','检测中');try{const res=await fetch(baseUrl()+'/api/mobile/health',{method:'GET'});const data=await res.json();if(!res.ok||!data.ok)throw new Error('health 返回异常');setConn('ok','API 可达');toast('连接正常：API 可达')}catch(e){setConn('bad','不可达');showError('API 不可达','请确认手机已登录 Tailscale，并且 API 地址为：\n'+DEFAULT_API+'\n\n错误：'+e.message)}}async function run(command){if(!requireConfig())return;setLoading(command);try{const res=await fetch(baseUrl()+'/api/mobile/run',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+tokenEl.value.trim()},body:JSON.stringify({command})});const data=await res.json().catch(()=>({ok:false,output:'返回不是 JSON：HTTP '+res.status}));if(!res.ok&&data.detail)data.output='HTTP '+res.status+': '+data.detail;showOutput(command,data)}catch(e){showError('请求失败','通常原因：手机未连接 Tailscale、API 地址错误、Token 错误、服务器服务未运行。\n\n'+e.message)}}document.querySelectorAll('[data-command]').forEach(btn=>btn.addEventListener('click',()=>run(btn.dataset.command)));document.getElementById('runCustom').addEventListener('click',()=>{const v=document.getElementById('custom').value.trim();if(!v)return showError('命令为空','请输入白名单命令，例如 tasks 或 status。');run(v)});document.getElementById('health').addEventListener('click',health);document.getElementById('fillApi').addEventListener('click',()=>{apiEl.value=DEFAULT_API;save();toast('已填入默认 Tailscale API 地址')});document.getElementById('toggleToken').addEventListener('click',()=>{tokenEl.type=tokenEl.type==='password'?'text':'password';document.getElementById('toggleToken').textContent=tokenEl.type==='password'?'显示':'隐藏'});document.getElementById('clear').addEventListener('click',()=>{localStorage.removeItem('hermes_api');localStorage.removeItem('hermes_token');apiEl.value=DEFAULT_API;tokenEl.value='';save();setConn('wait','未检测');toast('已清空本机 Token')});document.getElementById('copyResult').addEventListener('click',async()=>{const text=out.hidden?'':out.textContent;if(!text)return toast('没有可复制内容');try{await navigator.clipboard.writeText(text);toast('结果已复制')}catch{toast('浏览器不允许复制')}});apiEl.addEventListener('change',save);tokenEl.addEventListener('change',save);const tabs=[...document.querySelectorAll('.tab')],sections=tabs.map(t=>document.querySelector(t.getAttribute('href'))).filter(Boolean),observer=new IntersectionObserver(entries=>{const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(!visible)return;tabs.forEach(t=>t.classList.toggle('active',t.getAttribute('href')==='#'+visible.target.id))},{rootMargin:'-25% 0px -60% 0px',threshold:[.01,.2,.5]});sections.forEach(s=>observer.observe(s));
 </script>
 </body>
 </html>
