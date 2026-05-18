@@ -138,7 +138,7 @@
 
     <section class="panel" id="tasks">
       <div class="head">
-        <div><h2>任务</h2><div class="hint">任务区独立刷新，不跳转到日志</div></div>
+        <div><h2>任务</h2><div class="hint">详情、结果和多轮补充都在任务卡片内完成</div></div>
         <button class="mini" id="refreshTasks">刷新任务</button>
       </div>
       <div class="list" id="taskList"><div class="item">等待刷新...</div></div>
@@ -241,7 +241,10 @@
 
     function taskCard(t){
       const body = t.body ? `<div class="item-meta">${esc(t.body).slice(0,220)}</div>` : '';
-      return `<div class="item"><div class="item-title">${esc(t.title)}</div><div class="item-meta"><span class="pill"><span>${esc(t.status)}</span></span><span class="pill"><span>P${esc(t.priority)}</span></span><span class="pill"><span>${esc(t.id)}</span></span></div>${body}${t.last_failure_error?`<div class="item-meta">${esc(t.last_failure_error)}</div>`:''}</div>`;
+      const id = esc(t.id);
+      const detailId = 'taskDetail_' + id.replace(/[^a-zA-Z0-9_-]/g,'_');
+      const commentId = 'taskComment_' + id.replace(/[^a-zA-Z0-9_-]/g,'_');
+      return `<div class="item"><div class="item-title">${esc(t.title)}</div><div class="item-meta"><span class="pill"><span>${esc(t.status)}</span></span><span class="pill"><span>P${esc(t.priority)}</span></span><span class="pill"><span>${esc(t.id)}</span></span><span class="pill"><span>${esc(t.assignee || 'unassigned')}</span></span></div>${body}${t.result?`<div class="item-meta">结果：${esc(t.result).slice(0,260)}</div>`:''}${t.last_failure_error?`<div class="item-meta">失败：${esc(t.last_failure_error)}</div>`:''}<div class="item-actions"><button class="mini" onclick="taskDetail('${id}','${detailId}')">详情/结果</button><button class="mini" onclick="taskDispatch('${id}','${detailId}')">启动一次</button></div><textarea id="${commentId}" placeholder="补充要求，例如：先给我手机友好摘要，再列下一步。" style="margin-top:9px;min-height:64px"></textarea><button class="mini primary" style="width:100%;margin-top:8px" onclick="taskComment('${id}','${commentId}','${detailId}')">追加补充/继续推进</button><div class="detail" id="${detailId}"></div></div>`;
     }
     function sessionCard(s){
       const id = esc(s.session_id);
@@ -262,6 +265,42 @@
     }
     function renderTasks(items){ $('taskList').innerHTML = items.map(taskCard).join('') || '<div class="item">没有任务</div>'; }
     function renderSessions(items){ $('sessionList').innerHTML = items.map(sessionCard).join('') || '<div class="item">没有会话</div>'; }
+
+
+    function formatTaskDetail(item){
+      const lines = [];
+      lines.push(`状态：${item.status} · assignee: ${item.assignee || 'unassigned'} · P${item.priority}`);
+      lines.push(`创建：${fmtUnix(item.created_at)}  开始：${fmtUnix(item.started_at)}  完成：${fmtUnix(item.completed_at)}`);
+      if(item.result) lines.push(`\n【结果】\n${item.result}`);
+      if(item.last_failure_error) lines.push(`\n【失败信息】\n${item.last_failure_error}`);
+      if(item.runs && item.runs.length){
+        lines.push('\n【运行记录】');
+        item.runs.forEach(r => lines.push(`#${r.id} ${r.status || '-'} / ${r.outcome || '-'} · ${fmtUnix(r.started_at)} -> ${fmtUnix(r.ended_at)}${r.summary ? '\n  '+r.summary : ''}${r.error ? '\n  ERROR: '+r.error : ''}`));
+      } else {
+        lines.push('\n【运行记录】暂无。若状态是 ready，点“启动一次”。');
+      }
+      if(item.comments && item.comments.length){
+        lines.push('\n【多轮补充】');
+        item.comments.forEach(c => lines.push(`${fmtUnix(c.created_at)} ${c.author}: ${c.body}`));
+      }
+      if(item.log_tail) lines.push(`\n【日志尾部】\n${item.log_tail}`);
+      return lines.join('\n');
+    }
+    function fmtUnix(v){ if(!v) return '-'; try { return new Date(Number(v)*1000).toLocaleString('zh-CN',{hour12:false}); } catch { return String(v); } }
+    async function taskDetail(id, detailId){
+      try { setInline(detailId, '读取任务详情...'); const d = await getJSON('/api/mobile/tasks/'+encodeURIComponent(id)); setInline(detailId, formatTaskDetail(d.item)); conn(true,'已连接'); }
+      catch(e){ setInline(detailId, '读取失败：'+e.message); conn(false,'异常'); }
+    }
+    async function taskComment(id, commentId, detailId){
+      const body = $(commentId).value.trim();
+      if(!body) return setInline(detailId, '请先填写补充要求。');
+      try { setInline(detailId, '追加补充中...'); await postJSON('/api/mobile/tasks/'+encodeURIComponent(id)+'/comment',{body}); $(commentId).value=''; await taskDetail(id, detailId); toast('已追加补充'); }
+      catch(e){ setInline(detailId, '追加失败：'+e.message); conn(false,'异常'); }
+    }
+    async function taskDispatch(id, detailId){
+      try { setInline(detailId, '准备启动：先分配 default，再触发一次 dispatch...'); await postJSON('/api/mobile/tasks/'+encodeURIComponent(id)+'/action',{action:'assign_default'}); const d = await postJSON('/api/mobile/tasks/'+encodeURIComponent(id)+'/action',{action:'dispatch'}); setInline(detailId, JSON.stringify(d, null, 2)); toast('已触发 dispatch，稍后刷新详情看结果'); setTimeout(()=>taskDetail(id, detailId), 3000); }
+      catch(e){ setInline(detailId, '启动失败：'+e.message); conn(false,'异常'); }
+    }
 
     async function refreshAll(){ try { conn(null,'刷新中'); renderSnapshot(await getJSON('/api/mobile/snapshot')); toast('全部已刷新'); } catch(e){ logError('刷新失败', e.message); } }
     async function refreshTasks(){ try { conn(null,'刷新任务'); const d = await getJSON('/api/mobile/snapshot'); renderTasks((d.tasks || {}).items || []); const c=(d.tasks||{}).counts||{}; $('readyN').textContent=c.ready||0; $('runN').textContent=c.running||0; $('blockN').textContent=c.blocked||0; conn(true,'已连接'); toast('任务已刷新'); } catch(e){ logError('任务刷新失败', e.message); } }
