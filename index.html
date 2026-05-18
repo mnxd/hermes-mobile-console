@@ -244,7 +244,7 @@
       const id = esc(t.id);
       const detailId = 'taskDetail_' + id.replace(/[^a-zA-Z0-9_-]/g,'_');
       const commentId = 'taskComment_' + id.replace(/[^a-zA-Z0-9_-]/g,'_');
-      return `<div class="item"><div class="item-title">${esc(t.title)}</div><div class="item-meta"><span class="pill"><span>${esc(t.status)}</span></span><span class="pill"><span>P${esc(t.priority)}</span></span><span class="pill"><span>${esc(t.id)}</span></span><span class="pill"><span>${esc(t.assignee || 'unassigned')}</span></span></div>${body}${t.result?`<div class="item-meta">结果：${esc(t.result).slice(0,260)}</div>`:''}${t.last_failure_error?`<div class="item-meta">失败：${esc(t.last_failure_error)}</div>`:''}<div class="item-actions"><button class="mini" onclick="taskDetail('${id}','${detailId}')">详情/结果</button><button class="mini" onclick="taskDispatch('${id}','${detailId}')">启动一次</button></div><textarea id="${commentId}" placeholder="补充要求，例如：先给我手机友好摘要，再列下一步。" style="margin-top:9px;min-height:64px"></textarea><button class="mini primary" style="width:100%;margin-top:8px" onclick="taskComment('${id}','${commentId}','${detailId}')">追加补充/继续推进</button><div class="detail" id="${detailId}"></div></div>`;
+      return `<div class="item"><div class="item-title">${esc(t.title)}</div><div class="item-meta"><span class="pill"><span>${esc(t.status)}</span></span><span class="pill"><span>P${esc(t.priority)}</span></span><span class="pill"><span>${esc(t.id)}</span></span><span class="pill"><span>${esc(t.assignee || 'unassigned')}</span></span></div>${body}${t.result?`<div class="item-meta">结果：${esc(t.result).slice(0,260)}</div>`:''}${t.last_failure_error?`<div class="item-meta">失败：${esc(t.last_failure_error)}</div>`:''}<div class="item-actions"><button class="mini" onclick="taskDetail('${id}','${detailId}')">详情/结果</button><button class="mini" onclick="taskCodex('${id}','${detailId}')">Codex接管</button></div><textarea id="${commentId}" placeholder="补充要求，例如：先给我手机友好摘要，再列下一步。" style="margin-top:9px;min-height:64px"></textarea><button class="mini primary" style="width:100%;margin-top:8px" onclick="taskComment('${id}','${commentId}','${detailId}')">追加补充/继续推进</button><div class="detail" id="${detailId}"></div></div>`;
     }
     function sessionCard(s){
       const id = esc(s.session_id);
@@ -277,7 +277,7 @@
         lines.push('\n【运行记录】');
         item.runs.forEach(r => lines.push(`#${r.id} ${r.status || '-'} / ${r.outcome || '-'} · ${fmtUnix(r.started_at)} -> ${fmtUnix(r.ended_at)}${r.summary ? '\n  '+r.summary : ''}${r.error ? '\n  ERROR: '+r.error : ''}`));
       } else {
-        lines.push('\n【运行记录】暂无。若状态是 ready，点“启动一次”。');
+        lines.push('\n【运行记录】暂无。若状态是 ready，点“Codex接管”。');
       }
       if(item.comments && item.comments.length){
         lines.push('\n【多轮补充】');
@@ -297,9 +297,9 @@
       try { setInline(detailId, '追加补充中...'); await postJSON('/api/mobile/tasks/'+encodeURIComponent(id)+'/comment',{body}); $(commentId).value=''; await taskDetail(id, detailId); toast('已追加补充'); }
       catch(e){ setInline(detailId, '追加失败：'+e.message); conn(false,'异常'); }
     }
-    async function taskDispatch(id, detailId){
-      try { setInline(detailId, '准备启动：先分配 default，再触发一次 dispatch...'); await postJSON('/api/mobile/tasks/'+encodeURIComponent(id)+'/action',{action:'assign_default'}); const d = await postJSON('/api/mobile/tasks/'+encodeURIComponent(id)+'/action',{action:'dispatch'}); setInline(detailId, JSON.stringify(d, null, 2)); toast('已触发 dispatch，稍后刷新详情看结果'); setTimeout(()=>taskDetail(id, detailId), 3000); }
-      catch(e){ setInline(detailId, '启动失败：'+e.message); conn(false,'异常'); }
+    async function taskCodex(id, detailId){
+      try { setInline(detailId, '服务器 Codex 正在接管任务...'); const d = await postJSON('/api/mobile/tasks/'+encodeURIComponent(id)+'/action',{action:'codex_start'}); setInline(detailId, JSON.stringify(d, null, 2)); toast('Codex 已接管，稍后刷新详情'); setTimeout(()=>taskDetail(id, detailId), 5000); }
+      catch(e){ setInline(detailId, '接管失败：'+e.message); conn(false,'异常'); }
     }
 
     async function refreshAll(){ try { conn(null,'刷新中'); renderSnapshot(await getJSON('/api/mobile/snapshot')); toast('全部已刷新'); } catch(e){ logError('刷新失败', e.message); } }
